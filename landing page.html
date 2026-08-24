@@ -97,9 +97,11 @@
         }
 
         .features-section h2 {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: normal;
             margin-bottom: 30px;
+            font-family: "lucida sans", sans-serif;
+            font-weight: bold;
         }
 
         .feature-cards {
@@ -151,7 +153,53 @@
             cursor: pointer;
         }
 
-        /* --- BAGIAN FOOTER (Tentang) --- */
+        /* --- BAGIAN TENTANG (Kiri Foto, Kanan Deskripsi) --- */
+        .tentang-section {
+            display: flex;
+            padding: 40px;
+            border-bottom: 1px solid #999;
+            align-items: center;
+            gap: 40px;
+            background-color: #fafafa;
+        }
+
+        .tentang-foto {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Container foto dibuat lingkaran dengan border hijau */
+        .tentang-foto img {
+            width: 100%;
+            max-width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #54f77a;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .tentang-deskripsi {
+            flex: 2;
+        }
+
+        .tentang-deskripsi h2 {
+            font-size: 27px;
+            font-weight: normal;
+            margin-bottom: 20px;
+            font-family: "lucida sans", sans-serif;
+            font-weight: bold;
+        }
+
+        .tentang-deskripsi p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-family: "lucida sans", sans-serif;
+            font-size: 15px;
+        }
+
+        /* --- BAGIAN FOOTER --- */
         footer {
             padding: 40px;
             background-color: #54f77a;
@@ -159,13 +207,15 @@
 
         footer h3 {
             font-size: 20px;
-            font-weight: normal;
+            font-family: "lucida sans", sans-serif;
+            font-weight: bold;
             margin-bottom: 10px;
         }
 
         footer p {
             font-size: 16px;
-            max-width: 400px;
+            max-width: 600px;
+            font-family: "lucida sans", sans-serif;
         }
     </style>
 </head>
@@ -205,14 +255,26 @@
 
         <button><a href="Peta.html" class="btn-peta">Buka Peta!</a></button>
     </section>
-    <section class="Tentang">
-        <div class="Tentang-text">
-            <h2>Tentang</h2>
-            <p>Rute Ganteng adalah website berbasis GIS yang dikembangkan oleh Ilham Bagus Wiranto dengan tujuan mempermudah masyarakat khususnya pelajar dan masyarakat umum dalam mengetahui rute perjalanan Bus Si Mas Ganteng.</p>
+
+    <!-- SECTION TENTANG BARU -->
+    <section class="tentang-section">
+        <div class="tentang-foto">
+            <!-- Ganti 'foto-profil.jpg' dengan nama file fotomu yang sebenarnya -->
+            <img src="foto-profil.jpg" alt="Foto Ilham Bagus Wiranto">
+        </div>
+        <div class="tentang-deskripsi">
+            <h2>Tentang Pengembang</h2>
+            <p>Perkenalkan, saya <strong>Ilham Bagus Wiranto</strong>. Sebagai seorang lulusan Perencanaan Wilayah dan Kota, saya memiliki ketertarikan yang mendalam terhadap pemanfaatan Sistem Informasi Geografis (GIS) dan analisis spasial dalam memecahkan masalah tata kota sehari-hari.</p>
+            
+            <p>Proyek <strong>Rute Ganteng</strong> ini bermula dari pengamatan terhadap kebutuhan transportasi pelajar dan masyarakat di Kabupaten Tuban. Saya menyadari perlunya sebuah platform digital interaktif yang mampu memetakan operasional Bus Si Mas Ganteng secara presisi. Oleh karena itu, saya mengintegrasikan keahlian pemetaan web (WebGIS) ke dalam website ini untuk mendigitalisasi rute dan jangkauan halte.</p>
+
+            <p>Harapan saya, inovasi spasial ini tidak hanya sekadar memudahkan warga dan pelajar dalam mengakses layanan bus, tetapi juga menjadi sumbangsih nyata dalam mendukung mobilitas publik dan perencanaan tata kota Kabupaten Tuban yang lebih cerdas dan terintegrasi.</p>
+        </div>
     </section>
+
     <footer>
         <h3>Tentang</h3>
-        <p>Rute Ganteng adalah website berbasis GIS yang dikembangkan oleh Ilham Bagus Wiranto dengan tujuan mempermudah masyarakat dalam mengetahui rute perjalanan Bus Si Mas Ganteng.</p>
+        <p>Rute Ganteng adalah website berbasis GIS yang dikembangkan oleh Ilham Bagus Wiranto dengan tujuan mempermudah masyarakat dalam mengetahui rute perjalanan Bus Si Mas Ganteng secara interaktif dan spasial.</p>
     </footer>
 
     <script>
