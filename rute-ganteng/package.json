@@ -12,6 +12,7 @@
     "vite": "^8.2.2"
   },
   "dependencies": {
+    "@turf/buffer": "^7.4.0",
     "maplibre-gl": "^6.6.0"
   }
 }

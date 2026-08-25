@@ -1,5 +1,8 @@
 import { Map } from 'maplibre-gl';
-
+import { addGeolocationControl } from './geolocation.js';
+import 'maplibre-gl/dist/maplibre-gl.css';
+import { createHalteBuffer } from './bufferhalte.js';
+import { addHaltePopup } from './popup.js';
 
 const mapLayout = document.createElement('div');
 mapLayout.id = 'map-layout';
@@ -7,8 +10,28 @@ mapLayout.id = 'map-layout';
 const sidePanel = document.createElement('aside');
 sidePanel.id = 'side-panel';
 sidePanel.innerHTML = `
-  <h2>Informasi Peta</h2>
-  <p>Pilih halte atau jaringan jalan pada peta.</p>
+  <section>
+    <h2>Layer Peta</h2>
+
+    <label>
+      <input type="checkbox" data-layer="halte-points" checked>
+      Halte
+    </label>
+
+    <label>
+      <input type="checkbox" data-layer="jaringan-jalan-line" checked>
+      Jaringan Jalan
+    </label>
+  </section>
+
+  <section>
+    <h2>Buffer Halte</h2>
+
+    <label>
+      <input type="checkbox" data-layer="halte-buffer">
+      Buffer 300 meter
+    </label>
+  </section>
 `;
 
 const mapElement = document.createElement('div');
@@ -17,6 +40,20 @@ mapElement.id = 'map';
 mapLayout.appendChild(sidePanel);
 mapLayout.appendChild(mapElement);
 document.body.appendChild(mapLayout);
+
+sidePanel.querySelectorAll('input[data-layer]').forEach((toggle) => {
+  toggle.addEventListener('change', () => {
+    const visibility = toggle.checked ? 'visible' : 'none';
+
+    if (map.getLayer(toggle.dataset.layer)) {
+      map.setLayoutProperty(
+        toggle.dataset.layer,
+        'visibility',
+        visibility
+      );
+    }
+  });
+});
 
 const map = new Map({
   container: 'map',
@@ -45,46 +82,77 @@ const map = new Map({
   attributionControl: true
 });
 
-map.on('load', () => {
-  fetch('/data/Halte.geojson')
-    .then((response) => response.json())
-    .then((halteData) => {
-      map.addSource('halte', {
-        type: 'geojson',
-        data: halteData
-      });
+map.on('load', async () => {
+  const [halteResponse, jalanResponse] = await Promise.all([
+    fetch('/data/Halte.geojson'),
+    fetch('/data/jaringan-jalan.geojson')
+  ]);
 
-      map.addLayer({
-        id: 'halte-points',
-        type: 'circle',
-        source: 'halte',
-        paint: {
-          'circle-radius': 6,
-          'circle-color': '#e63946',
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#ffffff'
-        }
-      });
-    });
+  const halteData = await halteResponse.json();
+  const jalanData = await jalanResponse.json();
+
+  map.addSource('halte', {
+    type: 'geojson',
+    data: halteData
+  });
+
+  map.addSource('halte-buffer', {
+    type: 'geojson',
+    data: createHalteBuffer(halteData)
+  });
+
+  map.addSource('jaringan-jalan', {
+    type: 'geojson',
+    data: jalanData
+  });
+
+  map.addLayer({
+    id: 'jaringan-jalan-line',
+    type: 'line',
+    source: 'jaringan-jalan',
+    paint: {
+      'line-color': '#dddddb',
+      'line-width': 2,
+      'line-opacity': 0.7
+    }
+  });
+
+  map.addLayer({
+    id: 'halte-buffer',
+    type: 'fill',
+    source: 'halte-buffer',
+    layout: {
+      visibility: 'none'
+    },
+    paint: {
+      'fill-color': '#ffff00',
+      'fill-opacity': 0.4,
+      'fill-outline-color': '#ffff00'
+    }
+  });
+
+  map.addLayer({
+    id: 'halte-points',
+    type: 'circle',
+    source: 'halte',
+    paint: {
+      'circle-radius': 6,
+      'circle-color': '#ff5722',
+      'circle-stroke-color': '#ffffff',
+      'circle-stroke-width': 2
+    }
+  });
+    addHaltePopup(map);
 });
-map.on('load', () => {
-   fetch('/data/jaringan-jalan.geojson')
-    .then((response) => response.json())
-    .then((jalanData) => {
-      map.addSource('jaringan-jalan', {
-        type: 'geojson',
-        data: jalanData
-      });
 
-      map.addLayer({
-        id: 'jaringan-jalan-line',
-        type: 'line',
-        source: 'jaringan-jalan',
-        paint: {
-          'line-color': '#dddddb',
-          'line-width': 2,
-          'line-opacity': 0.7
-        }
-      });
-    });
+
+const geolocateControl = addGeolocationControl(map, sidePanel);
+
+geolocateControl.on('geolocate', (position) => {
+  const { latitude, longitude } = position.coords;
+
+  map.flyTo({
+    center: [longitude, latitude],
+    zoom: 15
+  });
 });

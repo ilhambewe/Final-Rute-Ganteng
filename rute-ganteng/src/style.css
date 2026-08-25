@@ -326,11 +326,12 @@ code {
 #map-layout {
   display: flex;
   width: 100%;
-  min-height: 500px;
+  height: 100dvh;
+  min-height: 0;
 }
 
 #side-panel {
-  width: 280px;
+  width: 220px;
   flex-shrink: 0;
   box-sizing: border-box;
   padding: 24px;
@@ -347,7 +348,7 @@ code {
 #map {
   flex: 1;
   min-width: 0;
-  height: 500px;
+  height: 100%;
 }
 
 @media (max-width: 600px) {
@@ -360,4 +361,293 @@ code {
     border-right: 0;
     border-bottom: 1px solid #ccc;
   }
+}
+/* Mengatur margin dasar dan jenis huruf */
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+  }
+
+  body {
+      color: #333;
+      line-height: 1.6;
+  }
+
+  /* --- HEADER & NAVIGASI --- */
+  header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid #999;
+      background-color: #54f77a;
+  }
+
+  header h1 {
+      font-size: 28px;
+      font-weight: normal;
+      font-family: bahnschrift; 
+  }
+
+  nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+  }
+
+  nav ul li {
+      cursor: pointer;
+      font-size: 16px;
+  }
+
+  /* Reset style default link navigasi */
+  nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+  }
+
+  /* --- BAGIAN HERO (Kiri Teks, Kanan Gambar) --- */
+  .hero-section {
+      display: flex;
+      border-bottom: 1px solid #999;
+      min-height: 400px;
+  }
+
+  .hero-text {
+      flex: 1;
+      padding: 30px;
+      border-right: 1px solid #999;
+  }
+
+  .hero-text h2 {
+      font-size: 27px;
+      font-weight: normal;
+      margin-bottom: 30px;
+      font-family: "lucida sans", sans-serif;
+      font-weight: bold;
+  }
+
+  .hero-text p {
+      margin-bottom: 18px;
+      text-align: justify;
+      font-family: "lucida sans", sans-serif;
+  }
+
+  .hero-image {
+      flex: 1.5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #666;
+      background-color: #fafafa;
+  }
+
+  /* --- BAGIAN FITUR --- */
+  .features-section {
+      padding: 40px;
+      text-align: center;
+      border-bottom: 1px solid #999;
+  }
+
+  .features-section h2 {
+      font-size: 24px;
+      font-weight: normal;
+      margin-bottom: 30px;
+      font-family: "lucida sans", sans-serif;
+      font-weight: bold;
+  }
+
+  .feature-cards {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+  }
+
+  /* Styling untuk 4 kotak fitur */
+  .card {
+      width: 130px;
+      height: 70px;
+      border: 1px solid #999;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 15px;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+  }
+
+  .card p {
+      font-size: 10px;
+      color: #666;
+      margin-top: 5px;
+  }
+
+  /* Tombol Buka Peta */
+  button {
+      border: none;
+      background: none;
+  }
+
+  .btn-peta {
+      display: inline-block;
+      text-decoration: none;
+      color: #333;
+      padding: 12px 30px;
+      font-size: 18px;
+      background-color: #fff;
+      border: 1px solid #999;
+      border-radius: 8px;
+      cursor: pointer;
+  }
+
+  /* --- BAGIAN TENTANG (Kiri Foto, Kanan Deskripsi) --- */
+  .tentang-section {
+      display: flex;
+      padding: 40px;
+      border-bottom: 1px solid #999;
+      align-items: center;
+      gap: 40px;
+      background-color: #fafafa;
+  }
+
+  .tentang-foto {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+  }
+
+  /* Container foto dibuat lingkaran dengan border hijau */
+  .tentang-foto img {
+      width: 100%;
+      max-width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid #54f77a;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .tentang-deskripsi {
+      flex: 2;
+  }
+
+  .tentang-deskripsi h2 {
+      font-size: 27px;
+      font-weight: normal;
+      margin-bottom: 20px;
+      font-family: "lucida sans", sans-serif;
+      font-weight: bold;
+  }
+
+  .tentang-deskripsi p {
+      margin-bottom: 15px;
+      text-align: justify;
+      font-family: "lucida sans", sans-serif;
+      font-size: 15px;
+  }
+
+  /* --- BAGIAN FOOTER --- */
+  footer {
+      padding: 40px;
+      background-color: #54f77a;
+  }
+
+  footer h3 {
+      font-size: 20px;
+      font-family: "lucida sans", sans-serif;
+      font-weight: bold;
+      margin-bottom: 10px;
+  }
+
+  footer p {
+      font-size: 16px;
+      max-width: 600px;
+      font-family: "lucida sans", sans-serif;
+  }
+#side-panel section + section {
+  margin-top: 28px;
+}
+
+#side-panel label {
+  display: block;
+  margin-top: 12px;
+}  
+
+.halte-popup .maplibregl-popup-content {
+  animation: halte-popup-appear 400ms ease-out;
+  transform-origin: bottom center;
+}
+
+@keyframes halte-popup-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+#tentang,
+#kontak {
+  scroll-margin-top: 90px;
+}
+
+.feature-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.feature-modal[hidden] {
+    display: none;
+}
+
+.feature-modal-content {
+    position: relative;
+    width: min(420px, 100%);
+    padding: 30px;
+    border: 1px solid #999;
+    border-radius: 8px;
+    background: #fff;
+    color: #333;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.feature-modal-content h3 {
+    margin: 0 35px 12px 0;
+    font-size: 22px;
+}
+
+.feature-modal-content p {
+    font-size: 16px;
+}
+
+.feature-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #333;
+    font-size: 28px;
+    cursor: pointer;
 }
