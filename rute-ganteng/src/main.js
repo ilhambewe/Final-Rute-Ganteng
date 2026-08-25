@@ -83,68 +83,80 @@ const map = new Map({
 });
 
 map.on('load', async () => {
-  const [halteResponse, jalanResponse] = await Promise.all([
-  fetch(`${import.meta.env.BASE_URL}data/Halte.geojson`),
-  fetch(`${import.meta.env.BASE_URL}data/jaringan-jalan.geojson`)
-]);
+  try {
+    const [halteResponse, jalanResponse] = await Promise.all([
+      fetch(`${import.meta.env.BASE_URL}data/Halte.geojson`),
+      fetch(`${import.meta.env.BASE_URL}data/jaringan-jalan.geojson`)
+    ]);
 
-  const halteData = await halteResponse.json();
-  const jalanData = await jalanResponse.json();
-
-  map.addSource('halte', {
-    type: 'geojson',
-    data: halteData
-  });
-
-  map.addSource('halte-buffer', {
-    type: 'geojson',
-    data: createHalteBuffer(halteData)
-  });
-
-  map.addSource('jaringan-jalan', {
-    type: 'geojson',
-    data: jalanData
-  });
-
-  map.addLayer({
-    id: 'jaringan-jalan-line',
-    type: 'line',
-    source: 'jaringan-jalan',
-    paint: {
-      'line-color': '#dddddb',
-      'line-width': 2,
-      'line-opacity': 0.7
+    if (!halteResponse.ok || !jalanResponse.ok) {
+      throw new Error(
+        `Data request failed: halte=${halteResponse.status}, jalan=${jalanResponse.status}`
+      );
     }
-  });
 
-  map.addLayer({
-    id: 'halte-buffer',
-    type: 'fill',
-    source: 'halte-buffer',
-    layout: {
-      visibility: 'none'
-    },
-    paint: {
-      'fill-color': '#ffff00',
-      'fill-opacity': 0.4,
-      'fill-outline-color': '#ffff00'
-    }
-  });
+    const halteData = await halteResponse.json();
+    const jalanData = await jalanResponse.json();
 
-  map.addLayer({
-    id: 'halte-points',
-    type: 'circle',
-    source: 'halte',
-    paint: {
-      'circle-radius': 6,
-      'circle-color': '#ff5722',
-      'circle-stroke-color': '#ffffff',
-      'circle-stroke-width': 2
-    }
-  });
+    console.log('Halte:', halteData.features.length);
+    console.log('Jalan:', jalanData.features.length);
+
+    map.addSource('halte', {
+      type: 'geojson',
+      data: halteData
+    });
+
+    map.addSource('jaringan-jalan', {
+      type: 'geojson',
+      data: jalanData
+    });
+
+    map.addLayer({
+      id: 'jaringan-jalan-line',
+      type: 'line',
+      source: 'jaringan-jalan',
+      paint: {
+        'line-color': '#bdbdbd',
+        'line-width': 2,
+        'line-opacity': 0.8
+      }
+    });
+
+    map.addLayer({
+      id: 'halte-points',
+      type: 'circle',
+      source: 'halte',
+      paint: {
+        'circle-radius': 8,
+        'circle-color': '#ff0000',
+        'circle-stroke-color': '#ffffff',
+        'circle-stroke-width': 2
+      }
+    });
+
+    map.addSource('halte-buffer', {
+      type: 'geojson',
+      data: createHalteBuffer(halteData)
+    });
+
+    map.addLayer({
+      id: 'halte-buffer',
+      type: 'fill',
+      source: 'halte-buffer',
+      layout: {
+        visibility: 'none'
+      },
+      paint: {
+        'fill-color': '#ffff00',
+        'fill-opacity': 0.4
+      }
+    });
+
     addHaltePopup(map);
+  } catch (error) {
+    console.error('Map data failed:', error);
+  }
 });
-
 
 const geolocateControl = addGeolocationControl(map, sidePanel);
 
