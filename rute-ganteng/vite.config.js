@@ -6,13 +6,18 @@ const currentDirectory = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   base: '/Final-Rute-Ganteng/',
+
+  optimizeDeps: {
+    exclude: ['maplibre-gl']
+  },
+
   build: {
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 7000,
     rollupOptions: {
       input: {
         main: resolve(currentDirectory, 'index.html'),
-        map: resolve(currentDirectory, 'map/index.html'),
-      },
-    },
-  },
+        map: resolve(currentDirectory, 'map/index.html')
+      }
+    }
+  }
 });
