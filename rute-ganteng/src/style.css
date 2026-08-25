@@ -323,3 +323,41 @@ code {
     border-right-color: var(--border);
   }
 }
+#map-layout {
+  display: flex;
+  width: 100%;
+  min-height: 500px;
+}
+
+#side-panel {
+  width: 280px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 24px;
+  color: #333;
+  background: #ffffff;
+  border-right: 1px solid #ccc;
+}
+
+#side-panel h2 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+#map {
+  flex: 1;
+  min-width: 0;
+  height: 500px;
+}
+
+@media (max-width: 600px) {
+  #map-layout {
+    flex-direction: column;
+  }
+
+  #side-panel {
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid #ccc;
+  }
+}
