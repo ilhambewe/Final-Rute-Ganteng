@@ -84,9 +84,9 @@ const map = new Map({
 
 map.on('load', async () => {
   const [halteResponse, jalanResponse] = await Promise.all([
-    fetch('/data/Halte.geojson'),
-    fetch('/data/jaringan-jalan.geojson')
-  ]);
+  fetch(`${import.meta.env.BASE_URL}data/Halte.geojson`),
+  fetch(`${import.meta.env.BASE_URL}data/jaringan-jalan.geojson`)
+]);
 
   const halteData = await halteResponse.json();
   const jalanData = await jalanResponse.json();
