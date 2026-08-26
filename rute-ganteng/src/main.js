@@ -1,4 +1,4 @@
-import { Map } from 'maplibre-gl';
+import { Map, } from 'maplibre-gl';
 import { addGeolocationControl } from './geolocation.js';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { createHalteBuffer } from './bufferhalte.js';
